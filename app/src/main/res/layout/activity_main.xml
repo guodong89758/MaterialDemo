@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <include layout="@layout/include_drawer_content" />
+    <!--<include layout="@layout/include_drawer_content" />-->
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
