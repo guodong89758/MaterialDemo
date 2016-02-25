@@ -19,7 +19,7 @@
         android:layout_gravity="start"
         app:elevation="5dp"
         app:headerLayout="@layout/include_navigation_header"
-        app:itemIconTint="@color/colorPrimary"
-        app:itemTextColor="@color/colorPrimaryDark"
+        app:itemIconTint="@color/nav_menu_color_selector"
+        app:itemTextColor="@color/nav_menu_color_selector"
         app:menu="@menu/drawer_menu" />
 </android.support.v4.widget.DrawerLayout>

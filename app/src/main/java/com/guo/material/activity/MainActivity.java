@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import com.guo.material.R;
 import com.guo.material.fragment.FriendFragment;
 import com.guo.material.fragment.HomeFragment;
+import com.guo.material.fragment.SensorFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FrameLayout fl_container;
     private HomeFragment homeFragment;
     private FriendFragment friendFragment;
+    private SensorFragment sensorFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         switchFragment(homeFragment);
                         break;
                     case R.id.nav_message:
+                        if (sensorFragment == null) {
+                            sensorFragment = new SensorFragment();
+                        }
+                        switchFragment(sensorFragment);
                         break;
                     case R.id.nav_friend:
                         if (friendFragment == null) {
