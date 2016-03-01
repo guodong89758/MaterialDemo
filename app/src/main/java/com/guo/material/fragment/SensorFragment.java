@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -142,7 +143,7 @@ public class SensorFragment extends Fragment {
             if (mCanvas == null) {
                 return;
             }
-            mCanvas.drawColor(Color.BLACK);
+            mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             mCanvas.drawBitmap(ballBitmap, mPosX, mPosY, bitmapPaint);
 //            mCanvas.drawText("X轴重力值：" + mGx, 0, 20, textPaint);
 //            mCanvas.drawText("Y轴重力值：" + mGy, 0, 40, textPaint);
