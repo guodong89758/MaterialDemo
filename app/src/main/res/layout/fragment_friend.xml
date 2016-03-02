@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.guo.material.widget.ViewDraggerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerInParent="true"
-        android:background="#ee5555"
-        android:gravity="center"
-        android:text="好友"
-        android:textColor="#ffffff" />
+    <com.guo.material.widget.reveal.RevealBackgroundView
+        android:id="@+id/reveal_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-</com.guo.material.widget.ViewDraggerLayout>
+    <com.guo.material.widget.ViewDraggerLayout
+        android:id="@+id/dragger_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="#ee5555"
+            android:gravity="center"
+            android:text="好友"
+            android:textColor="#ffffff" />
+
+    </com.guo.material.widget.ViewDraggerLayout>
+</FrameLayout>

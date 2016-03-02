@@ -13,6 +13,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.guo.material.R;
+import com.guo.material.widget.reveal.RevealFrameLayout;
 import com.guo.material.widget.reveal.animation.SupportAnimator;
 import com.guo.material.widget.reveal.animation.ViewAnimationUtils;
 
@@ -21,6 +22,7 @@ import com.guo.material.widget.reveal.animation.ViewAnimationUtils;
  */
 public class CheeseDetailActivity extends AppCompatActivity implements ViewTreeObserver.OnPreDrawListener {
     public static final String VIEW_NAME_HEADER_IMAGE = "detail:header:image";
+    private RevealFrameLayout reveal_layout;
     private CoordinatorLayout detail_content;
     private CollapsingToolbarLayout collapsing_toolbar;
     private Toolbar toolbar;
@@ -30,6 +32,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements ViewTreeO
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheese_detail);
+        reveal_layout = (RevealFrameLayout) findViewById(R.id.reveal_layout);
         detail_content = (CoordinatorLayout) findViewById(R.id.detail_content);
         collapsing_toolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -58,6 +61,8 @@ public class CheeseDetailActivity extends AppCompatActivity implements ViewTreeO
 
     @Override
     public boolean onPreDraw() {
+        detail_content.setBackgroundColor(getResources().getColor(R.color.rect));
+        detail_content.bringToFront();
         detail_content.getViewTreeObserver().removeOnPreDrawListener(this);
         startRevealTransition();
         return true;
