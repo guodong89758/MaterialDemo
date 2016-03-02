@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mPagerAdapter = new CheeseListAdapter(getChildFragmentManager());
         mPagerAdapter.addFragment(new CheeseListFragment(), "title1");
         mPagerAdapter.addFragment(new ScrollingImageFragment(), "title2");
-        mPagerAdapter.addFragment(new CheeseListFragment(), "title3");
+        mPagerAdapter.addFragment(new LoadingFragment(), "title3");
         mPagerAdapter.addFragment(new CheeseListFragment(), "title4");
         mPagerAdapter.addFragment(new CheeseListFragment(), "title5");
         viewpager.setAdapter(mPagerAdapter);
