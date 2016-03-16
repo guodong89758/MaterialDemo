@@ -12,6 +12,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.guo.material.R;
 import com.guo.material.widget.reveal.RevealFrameLayout;
 import com.guo.material.widget.reveal.animation.SupportAnimator;
@@ -42,8 +43,9 @@ public class CheeseDetailActivity extends AppCompatActivity implements ViewTreeO
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         detail_content.getViewTreeObserver().addOnPreDrawListener(this);
-        int resId = getIntent().getIntExtra("image", R.drawable.cheese_1);
-        iv_cheese.setImageResource(resId);
+        String image_url = getIntent().getStringExtra("image");
+        Glide.with(this).load(image_url).placeholder(R.drawable.ic_def_cover).into(iv_cheese);
+//        iv_cheese.setImageResource(resId);
 
         collapsing_toolbar.setTitle("cheese");
         ViewCompat.setTransitionName(iv_cheese, VIEW_NAME_HEADER_IMAGE);
@@ -61,7 +63,6 @@ public class CheeseDetailActivity extends AppCompatActivity implements ViewTreeO
 
     @Override
     public boolean onPreDraw() {
-        detail_content.setBackgroundColor(getResources().getColor(R.color.rect));
         detail_content.bringToFront();
         detail_content.getViewTreeObserver().removeOnPreDrawListener(this);
         startRevealTransition();

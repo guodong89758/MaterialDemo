@@ -44,15 +44,15 @@ public class CheeseListFragment extends Fragment implements CheeseAdapter.OnItem
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rv_cheese.setLayoutManager(layoutManager);
 
-        mAdapter = new CheeseAdapter(resIds);
+        mAdapter = new CheeseAdapter(getActivity(), resIds);
         mAdapter.setOnItemClickListener(this);
         rv_cheese.setAdapter(mAdapter);
     }
 
     @Override
-    public void itemClick(View view, int position) {
+    public void itemClick(View view, String url) {
         Intent intent = new Intent(getActivity(), CheeseDetailActivity.class);
-        intent.putExtra("image", resIds[position]);
+        intent.putExtra("image", url);
 //        startActivity(intent);
         ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(),
                 new Pair<View, String>(view.findViewById(R.id.iv_cheese), CheeseDetailActivity.VIEW_NAME_HEADER_IMAGE));
