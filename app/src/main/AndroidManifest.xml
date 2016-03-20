@@ -24,6 +24,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.CheeseDetailActivity" />
+        <activity
+            android:name=".activity.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
