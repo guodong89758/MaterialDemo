@@ -5,6 +5,7 @@ import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ public class ViewDraggerLayout extends RelativeLayout {
 
     private ViewDragHelper dragHelper;
     private TextView textView;
+    private ImageView imageView;
 
     public ViewDraggerLayout(Context context) {
         super(context);
@@ -34,6 +36,7 @@ public class ViewDraggerLayout extends RelativeLayout {
     @Override
     protected void onFinishInflate() {
         textView = (TextView) getChildAt(0);
+        imageView = (ImageView) getChildAt(1);
         super.onFinishInflate();
     }
 
@@ -52,11 +55,11 @@ public class ViewDraggerLayout extends RelativeLayout {
         return true;
     }
 
-    ViewDragHelper.Callback dragCallback = new ViewDragHelper.Callback(){
+    ViewDragHelper.Callback dragCallback = new ViewDragHelper.Callback() {
 
         @Override
         public boolean tryCaptureView(View child, int pointerId) {
-            return child == textView;
+            return child == textView || child == imageView;
         }
 
         @Override

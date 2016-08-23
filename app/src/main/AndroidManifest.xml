@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.guo.material.utils.GlideConfiguration"
-            android:value="GlideModule"/>
+            android:value="GlideModule" />
 
         <activity android:name=".activity.MainActivity">
             <intent-filter>
@@ -24,10 +24,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.CheeseDetailActivity" />
+        <activity android:name=".activity.OptionsActivity" />
+        <activity android:name=".activity.TargetActivity" />
         <activity
             android:name=".activity.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.PictureActivity" />
+        <activity android:name=".activity.SetupActivity" />
+        <activity android:name=".activity.DynamicEffectActivity"></activity>
     </application>
 
 </manifest>

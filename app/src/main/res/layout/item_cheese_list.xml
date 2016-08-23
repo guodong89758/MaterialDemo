@@ -22,12 +22,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <com.guo.material.widget.roundimg.RoundedImageView
                 android:id="@+id/iv_cheese"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/cheese_1" />
+                android:src="@drawable/cheese_1"
+                app:riv_corner_radius="10dp" />
 
             <TextView
                 android:layout_width="match_parent"

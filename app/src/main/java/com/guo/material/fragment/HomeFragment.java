@@ -1,9 +1,9 @@
 package com.guo.material.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -13,10 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.guo.material.R;
+import com.guo.material.activity.OptionsActivity;
 import com.guo.material.adapter.CheeseListAdapter;
+import com.guo.material.widget.options.ActivityCompatICS;
+import com.guo.material.widget.options.ActivityOptionsCompatICS;
 
 /**
  * Created by admin on 2016/2/23.
@@ -60,12 +62,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.float_button:
-                Snackbar.make(v, "this is a snackbar", Snackbar.LENGTH_LONG).setAction("点击Snackbar", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(getActivity(), "点击Snackbar", Toast.LENGTH_SHORT).show();
-                    }
-                }).show();
+//                Snackbar.make(v, "this is a snackbar", Snackbar.LENGTH_LONG).setAction("点击Snackbar", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Toast.makeText(getActivity(), "点击Snackbar", Toast.LENGTH_SHORT).show();
+//                    }
+//                }).show();
+                Intent intent = new Intent(getActivity(), OptionsActivity.class);
+                ActivityOptionsCompatICS optionsCompatICS = ActivityOptionsCompatICS.makeCustomAnimation(getActivity(), R.anim.slide_right_in, R.anim.slide_left_out);
+                ActivityCompatICS.startActivity(getActivity(), intent, optionsCompatICS.toBundle());
                 break;
         }
     }
@@ -75,7 +80,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         mPagerAdapter.addFragment(new CheeseListFragment(), "title1");
         mPagerAdapter.addFragment(new ScrollingImageFragment(), "title2");
         mPagerAdapter.addFragment(new LoadingFragment(), "title3");
-        mPagerAdapter.addFragment(new CheeseListFragment(), "title4");
+        mPagerAdapter.addFragment(new PathFragment(), "title4");
         mPagerAdapter.addFragment(new CheeseListFragment(), "title5");
         viewpager.setAdapter(mPagerAdapter);
         viewpager.setCurrentItem(0);

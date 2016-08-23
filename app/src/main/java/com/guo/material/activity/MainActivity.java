@@ -1,5 +1,6 @@
 package com.guo.material.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.nav_forum:
                         break;
                     case R.id.sub_setting:
+                        startActivity(new Intent(MainActivity.this, SetupActivity.class));
                         break;
                     case R.id.sub_about:
                         break;

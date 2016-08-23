@@ -12,10 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+
 /**
  * Created by guodong on 16/3/20.
  */
-public class SlidingDragLayout extends FrameLayout {
+public class SlidingDragLayout1 extends FrameLayout {
     private static final String TAG = "SlidingDragLayout";
     private ViewDragHelper dragHelper;
     private GestureDetectorCompat mDetectorCompat;
@@ -29,15 +30,15 @@ public class SlidingDragLayout extends FrameLayout {
     private int mDragRange;
     private boolean canDrag = true;
 
-    public SlidingDragLayout(Context context) {
+    public SlidingDragLayout1(Context context) {
         this(context, null);
     }
 
-    public SlidingDragLayout(Context context, AttributeSet attrs) {
+    public SlidingDragLayout1(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SlidingDragLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SlidingDragLayout1(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         dragHelper = ViewDragHelper.create(this, 0.8f, dragCallback);
         mDetectorCompat = new GestureDetectorCompat(context, gestureListener);
@@ -84,7 +85,40 @@ public class SlidingDragLayout extends FrameLayout {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+
+        if (getStatus() == Status.Close) {
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    downX = ev.getX();
+                    downY = ev.getY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    dsX = ev.getX() - downX;
+                    dsY = ev.getY() - downY;
+                    Log.d(TAG, "downX = " + downX);
+                    Log.d(TAG, "downY = " + downY);
+                    Log.d(TAG, "curY = " + ev.getY());
+                    Log.d(TAG, "curX = " + ev.getX());
+                    Log.d(TAG, "dsX = " + dsX + " dsY = " + dsY);
+                    break;
+                default:
+                    break;
+            }
+        } else if (mStatus == Status.Open && dragHelper.isViewUnder(mainContent, (int) ev.getX(), (int) ev.getY())) {
+            mDetectorCompat.onTouchEvent(ev);
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (getStatus() == Status.Close) {
+            if (Math.abs(dsY) >= Math.abs(dsX) || Math.abs(dsX) == 0) {
+                return super.onInterceptTouchEvent(ev);
+            }
+        }
 
         return dragHelper.shouldInterceptTouchEvent(ev);
 
@@ -94,25 +128,12 @@ public class SlidingDragLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        mDetectorCompat.onTouchEvent(event);
         if (getStatus() == Status.Close) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    downX = event.getX();
-                    downY = event.getY();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    dsX = event.getX() - downX;
-                    dsY = event.getY() - downY;
-                    Log.d(TAG, "dsX = " + dsX + " dsY = " + dsY);
-                    if (dsX > -100 || Math.abs(dsY) > Math.abs(dsX)) {
-                        return super.onTouchEvent(event);
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    break;
+            if (Math.abs(dsY) >= Math.abs(dsX) || Math.abs(dsX) == 0) {
+                return super.onTouchEvent(event);
             }
         }
+        mDetectorCompat.onTouchEvent(event);
         try {
             dragHelper.processTouchEvent(event);
         } catch (Exception e) {
@@ -242,7 +263,6 @@ public class SlidingDragLayout extends FrameLayout {
 
     private void dispatchDragEvent(int mainLeft) {
         float percent = mainLeft / (float) mDragRange;
-//        ViewHelper.setTranslationX(rightContent, mainLeft);
         rightContent.setTranslationX(mainLeft);
         if (dragListener != null) {
             dragListener.draging(percent);

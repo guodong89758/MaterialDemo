@@ -12,15 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+
 /**
  * Created by guodong on 16/3/20.
  */
-public class SlidingDragLayout extends FrameLayout {
+public class SlidingLeftDragLayout extends FrameLayout {
     private static final String TAG = "SlidingDragLayout";
     private ViewDragHelper dragHelper;
     private GestureDetectorCompat mDetectorCompat;
     private Status mStatus = Status.Close;
-    private View mainContent, rightContent;
+    private View mainContent, leftContent;
     private OnSlidingDragListener dragListener;
     private int mWidth;
     private int mHeight;
@@ -29,15 +30,15 @@ public class SlidingDragLayout extends FrameLayout {
     private int mDragRange;
     private boolean canDrag = true;
 
-    public SlidingDragLayout(Context context) {
+    public SlidingLeftDragLayout(Context context) {
         this(context, null);
     }
 
-    public SlidingDragLayout(Context context, AttributeSet attrs) {
+    public SlidingLeftDragLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SlidingDragLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SlidingLeftDragLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         dragHelper = ViewDragHelper.create(this, 0.8f, dragCallback);
         mDetectorCompat = new GestureDetectorCompat(context, gestureListener);
@@ -56,14 +57,14 @@ public class SlidingDragLayout extends FrameLayout {
             throw new IllegalArgumentException(
                     "Your childrens must be an instance of ViewGroup");
         }
-        mainContent = getChildAt(0);
-        rightContent = getChildAt(1);
+        leftContent = getChildAt(0);
+        mainContent = getChildAt(1);
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         mainContent.layout(mainLeft, 0, mainLeft + mWidth, mHeight);
-        rightContent.layout(mainLeft + mWidth, 0, mainLeft + mWidth + menuWidth, mHeight);
+        leftContent.layout(mainLeft - mWidth, 0, mainLeft - mWidth + menuWidth, mHeight);
         Log.d(TAG, "onlayout mainLeft = " + mWidth);
     }
 
@@ -72,7 +73,7 @@ public class SlidingDragLayout extends FrameLayout {
         super.onSizeChanged(w, h, oldw, oldh);
         mWidth = getMeasuredWidth();
         mHeight = getMeasuredHeight();
-        menuWidth = rightContent.getMeasuredWidth();
+        menuWidth = leftContent.getMeasuredWidth();
         mDragRange = menuWidth;
     }
 
@@ -84,7 +85,39 @@ public class SlidingDragLayout extends FrameLayout {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getStatus() == Status.Close) {
+            switch (ev.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    downX = ev.getX();
+                    downY = ev.getY();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    dsX = ev.getX() - downX;
+                    dsY = ev.getY() - downY;
+                    Log.d(TAG, "downX = " + downX);
+                    Log.d(TAG, "downY = " + downY);
+                    Log.d(TAG, "curY = " + ev.getY());
+                    Log.d(TAG, "curX = " + ev.getX());
+                    Log.d(TAG, "dsX = " + dsX + " dsY = " + dsY);
+                    break;
+                default:
+                    break;
+            }
+        } else if (mStatus == Status.Open && dragHelper.isViewUnder(mainContent, (int) ev.getX(), (int) ev.getY())) {
+            mDetectorCompat.onTouchEvent(ev);
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if (getStatus() == Status.Close) {
+            if (Math.abs(dsY) >= Math.abs(dsX) || Math.abs(dsX) == 0) {
+                return super.onInterceptTouchEvent(ev);
+            }
+        }
 
         return dragHelper.shouldInterceptTouchEvent(ev);
 
@@ -94,25 +127,14 @@ public class SlidingDragLayout extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        mDetectorCompat.onTouchEvent(event);
         if (getStatus() == Status.Close) {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    downX = event.getX();
-                    downY = event.getY();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    dsX = event.getX() - downX;
-                    dsY = event.getY() - downY;
-                    Log.d(TAG, "dsX = " + dsX + " dsY = " + dsY);
-                    if (dsX > -100 || Math.abs(dsY) > Math.abs(dsX)) {
-                        return super.onTouchEvent(event);
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    break;
+
+            if (event.getAction() == MotionEvent.ACTION_MOVE && Math.abs(dsY) >= Math.abs(dsX)) {
+                return super.onTouchEvent(event);
             }
         }
+
+        mDetectorCompat.onTouchEvent(event);
         try {
             dragHelper.processTouchEvent(event);
         } catch (Exception e) {
@@ -125,8 +147,8 @@ public class SlidingDragLayout extends FrameLayout {
 
         @Override
         public boolean tryCaptureView(View child, int pointerId) {
-            Log.d(TAG, "tryCaptureView " + String.valueOf(child == rightContent));
-            return child == mainContent;
+            Log.d(TAG, "tryCaptureView " + String.valueOf(child == leftContent));
+            return child == mainContent || child == leftContent;
         }
 
         @Override
@@ -146,10 +168,10 @@ public class SlidingDragLayout extends FrameLayout {
 
         @Override
         public int clampViewPositionHorizontal(View child, int left, int dx) {
-            if (mainLeft + dx > 0) {
+            if (mainLeft + dx < 0) {
                 return 0;
-            } else if (mainLeft + dx < -mDragRange) {
-                return -mDragRange;
+            } else if (mainLeft + dx > mDragRange) {
+                return mDragRange;
             }
             return left;
         }
@@ -165,16 +187,16 @@ public class SlidingDragLayout extends FrameLayout {
             if (changedView == mainContent) {
                 mainLeft = left;
             } else {
-                mainLeft -= dx;
+                mainLeft += dx;
             }
 
-            if (mainLeft > 0) {
+            if (mainLeft < 0) {
                 mainLeft = 0;
-            } else if (mainLeft < -mDragRange) {
-                mainLeft = -mDragRange;
+            } else if (mainLeft > mDragRange) {
+                mainLeft = mDragRange;
             }
             Log.d(TAG, "position changed mainLeft = " + mainLeft);
-            if (changedView == rightContent) {
+            if (changedView == leftContent) {
                 layoutContent();
             }
             dispatchDragEvent(mainLeft);
@@ -183,9 +205,9 @@ public class SlidingDragLayout extends FrameLayout {
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             Log.d(TAG, "xvel = " + xvel);
-            if (xvel < 0) {
+            if (xvel > 0) {
                 open();
-            } else if (xvel == 0 && mainLeft < -mDragRange * 0.5f) {
+            } else if (xvel == 0 && mainLeft > mDragRange * 0.3f) {
                 open();
             } else {
                 close();
@@ -210,9 +232,9 @@ public class SlidingDragLayout extends FrameLayout {
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             Log.d(TAG, "distanceX = " + distanceX + "  distanceY = " + distanceY);
-            if ((Math.abs(distanceX) > Math.abs(distanceY)) && distanceX < 0 && canDrag != false && mStatus == Status.Close) {
+            if ((Math.abs(distanceX) > Math.abs(distanceY)) && distanceX > 0 && canDrag != false && mStatus == Status.Close) {
                 return true;
-            } else if ((Math.abs(distanceX) > Math.abs(distanceY)) && distanceX < 0 && canDrag != false && mStatus == Status.Open) {
+            } else if ((Math.abs(distanceX) > Math.abs(distanceY)) && distanceX > 0 && canDrag != false && mStatus == Status.Open) {
                 close();
                 return true;
             } else {
@@ -237,13 +259,12 @@ public class SlidingDragLayout extends FrameLayout {
         Log.d(TAG, "mWidth = " + mWidth);
         Log.d(TAG, "menuWidth = " + menuWidth);
         mainContent.layout(mainLeft, 0, mainLeft + mWidth, mHeight);
-        rightContent.layout(mainLeft + mWidth, 0, mainLeft + mWidth + menuWidth, mHeight);
+        leftContent.layout(mainLeft - mWidth, 0, mainLeft - mWidth + menuWidth, mHeight);
     }
 
     private void dispatchDragEvent(int mainLeft) {
         float percent = mainLeft / (float) mDragRange;
-//        ViewHelper.setTranslationX(rightContent, mainLeft);
-        rightContent.setTranslationX(mainLeft);
+        leftContent.setTranslationX(mainLeft);
         if (dragListener != null) {
             dragListener.draging(percent);
         }
@@ -271,7 +292,7 @@ public class SlidingDragLayout extends FrameLayout {
     }
 
     private void open(boolean isSmooth) {
-        mainLeft = -mDragRange;
+        mainLeft = mDragRange;
         if (isSmooth) {
             if (dragHelper.smoothSlideViewTo(mainContent, mainLeft, 0)) {
                 ViewCompat.postInvalidateOnAnimation(this);
@@ -308,7 +329,7 @@ public class SlidingDragLayout extends FrameLayout {
     private Status updateStatus(int mainLeft) {
         if (mainLeft == 0) {
             mStatus = Status.Close;
-        } else if (mainLeft == -mDragRange) {
+        } else if (mainLeft == mDragRange) {
             mStatus = Status.Open;
         } else {
             mStatus = Status.Draging;

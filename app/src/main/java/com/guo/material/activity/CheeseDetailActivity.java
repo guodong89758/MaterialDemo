@@ -42,7 +42,7 @@ public class CheeseDetailActivity extends AppCompatActivity implements ViewTreeO
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        detail_content.getViewTreeObserver().addOnPreDrawListener(this);
+//        detail_content.getViewTreeObserver().addOnPreDrawListener(this);
         String image_url = getIntent().getStringExtra("image");
         Glide.with(this).load(image_url).placeholder(R.drawable.ic_def_cover).into(iv_cheese);
 //        iv_cheese.setImageResource(resId);

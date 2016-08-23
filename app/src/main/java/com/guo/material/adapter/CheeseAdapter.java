@@ -51,10 +51,10 @@ public class CheeseAdapter extends RecyclerView.Adapter<CheeseAdapter.ViewHolder
 //        holder.iv_cheese.setImageResource(resIds[position]);
         Glide.with(mContext)
                 .load(images[position])
+                .asBitmap()
                 .placeholder(R.drawable.ic_def_cover)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .centerCrop()
-                .crossFade()
                 .into(holder.iv_cheese);
         holder.itemView.setTag(R.id.iv_cheese, images[position]);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
