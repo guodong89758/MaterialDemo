@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         switchFragment(friendFragment);
                         break;
                     case R.id.nav_forum:
+                        startActivity(new Intent(MainActivity.this, IPCActivity.class));
                         break;
                     case R.id.sub_setting:
                         startActivity(new Intent(MainActivity.this, SetupActivity.class));

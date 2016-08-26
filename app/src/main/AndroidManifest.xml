@@ -3,6 +3,7 @@
     package="com.guo.material">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
@@ -32,7 +33,39 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.PictureActivity" />
         <activity android:name=".activity.SetupActivity" />
-        <activity android:name=".activity.DynamicEffectActivity"></activity>
+        <activity android:name=".activity.DynamicEffectActivity" />
+        <activity android:name=".activity.MessengerActivity" />
+        <activity android:name=".activity.IPCActivity" />
+
+        <service
+            android:name=".service.MessageService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+
+        <activity android:name=".activity.AidlActivity" />
+
+        <service
+            android:name=".service.BookManagerService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+
+        <activity android:name=".activity.SocketActivity" />
+
+        <service
+            android:name=".service.SocketService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+
+        <activity android:name=".activity.BinderPoolActivity" />
+
+        <service
+            android:name=".service.BindPoolService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
     </application>
 
 </manifest>
