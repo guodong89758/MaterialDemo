@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.guo.material.R;
-import com.guo.material.activity.OptionsActivity;
+import com.guo.material.activity.ZXingActivity;
 import com.guo.material.adapter.CheeseListAdapter;
 import com.guo.material.widget.options.ActivityCompatICS;
 import com.guo.material.widget.options.ActivityOptionsCompatICS;
@@ -68,7 +68,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //                        Toast.makeText(getActivity(), "点击Snackbar", Toast.LENGTH_SHORT).show();
 //                    }
 //                }).show();
-                Intent intent = new Intent(getActivity(), OptionsActivity.class);
+                Intent intent = new Intent(getActivity(), ZXingActivity.class);
                 ActivityOptionsCompatICS optionsCompatICS = ActivityOptionsCompatICS.makeCustomAnimation(getActivity(), R.anim.slide_right_in, R.anim.slide_left_out);
                 ActivityCompatICS.startActivity(getActivity(), intent, optionsCompatICS.toBundle());
                 break;

@@ -7,9 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -63,23 +61,22 @@ public class OptionsActivity extends AppCompatActivity implements RevealBackgrou
         reveal_view = (RevealBackgroundView) findViewById(R.id.reveal_view);
         rl_content = (RelativeLayout) findViewById(R.id.rl_content);
 
-        final int[] location = getIntent().getIntArrayExtra("location");
-        Log.d("location", location[0] + "  " + location[1]);
+//        final int[] location = getIntent().getIntArrayExtra("location");
+//        Log.d("location", location[0] + "  " + location[1]);
         reveal_view.setFillPaintColor(getResources().getColor(R.color.triangle));
         reveal_view.setOnStateChangeListener(this);
         screen_width = getResources().getDisplayMetrics().widthPixels;
         screen_height = getResources().getDisplayMetrics().heightPixels;
-        reveal_view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                reveal_view.getViewTreeObserver().removeOnPreDrawListener(this);
-                reveal_view.startFromLocation(new int[]{location[0], location[1]});
-//                reveal_view.startFromLocation(new int[]{screen_width / 2, screen_height / 2});
-                return true;
-            }
-        });
+//        reveal_view.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//            @Override
+//            public boolean onPreDraw() {
+//                reveal_view.getViewTreeObserver().removeOnPreDrawListener(this);
+//                reveal_view.startFromLocation(new int[]{location[0], location[1]});
+////                reveal_view.startFromLocation(new int[]{screen_width / 2, screen_height / 2});
+//                return true;
+//            }
+//        });
     }
-
 
 
     @SuppressWarnings("unchecked")
