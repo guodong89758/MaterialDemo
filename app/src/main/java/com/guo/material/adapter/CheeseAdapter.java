@@ -1,6 +1,7 @@
 package com.guo.material.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.guo.material.R;
+import com.nextjoy.game.util.NativeImageUtils;
 
 /**
  * Created by admin on 2016/3/1.
@@ -49,13 +52,20 @@ public class CheeseAdapter extends RecyclerView.Adapter<CheeseAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 //        holder.iv_cheese.setImageResource(resIds[position]);
-        Glide.with(mContext)
-                .load(images[position])
-                .asBitmap()
-                .placeholder(R.drawable.ic_def_cover)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .centerCrop()
-                .into(holder.iv_cheese);
+//        Glide.with(mContext)
+//                .load(images[position])
+//                .asBitmap()
+//                .placeholder(R.drawable.ic_def_cover)
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .centerCrop()
+//                .into(holder.iv_cheese);
+        Glide.with(mContext).load(images[position]).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+
+                holder.iv_cheese.setImageBitmap(NativeImageUtils.toGrayscaleNative(resource));
+            }
+        });
         holder.itemView.setTag(R.id.iv_cheese, images[position]);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
