@@ -45,4 +45,9 @@
             <enum name="mirror" value="2" />
         </attr>
     </declare-styleable>
+    <declare-styleable name="RatioImageView">
+        <attr name="aspectRatio" format="float" />
+        <attr name="adjustWidth" format="boolean" />
+    </declare-styleable>
+    
 </resources>

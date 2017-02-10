@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.guo.material.activity.BehaviorActivity">
+
+    <RatioImageView
+        android:id="@+id/iv_match_cover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_def_cover"
+        app:aspectRatio="0.56" />
+
+    <!--<View-->
+        <!--android:id="@+id/match_mask_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignBottom="@+id/iv_match_cover"-->
+        <!--android:layout_alignTop="@+id/iv_match_cover"-->
+        <!--android:background="@drawable/bg_mask_match_head" />-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/iv_match_cover"
+        android:background="@drawable/bg_match_mask" />
+
+    <TextView
+        android:id="@+id/tv_match_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="58dp"
+        android:shadowColor="@color/black"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        tools:text="守望先锋" />
+
+    <LinearLayout
+        android:id="@+id/ll_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_match_name"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/line_dash_divider_white"
+            android:layerType="software" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:background="@drawable/bg_match_time_dark"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="@color/white_90"
+            android:textSize="10dp"
+            tools:text="12月12日 12:12" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/line_dash_divider_white"
+            android:layerType="software" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_time"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-2dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="40dp" />
+
+            <!--android:id="@+id/tv_corps_weight"-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black_90"
+                android:textSize="26dp"
+                android:visibility="visible"
+                tools:text="123:126" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_guess_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_state_round_white_shape"
+            android:clickable="true"
+            android:gravity="center"
+            android:minHeight="25dp"
+            android:minWidth="54dp"
+            android:text="回放"
+            android:textColor="@color/black_90"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_corps_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_time"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" />
+
+        <TextView
+            android:id="@+id/tv_corps_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/black_80"
+            android:textSize="12dp"
+            tools:text="ALLIANCE" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_corps_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/ll_time"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" />
+
+        <TextView
+            android:id="@+id/tv_corps_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColor="@color/black_80"
+            android:textSize="12dp"
+            tools:text="TSM战队" />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -15,10 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.guo.material.R;
-import com.guo.material.activity.ZXingActivity;
+import com.guo.material.activity.BehaviorActivity;
 import com.guo.material.adapter.CheeseListAdapter;
-import com.guo.material.widget.options.ActivityCompatICS;
-import com.guo.material.widget.options.ActivityOptionsCompatICS;
 
 /**
  * Created by admin on 2016/2/23.
@@ -68,9 +68,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 //                        Toast.makeText(getActivity(), "点击Snackbar", Toast.LENGTH_SHORT).show();
 //                    }
 //                }).show();
-                Intent intent = new Intent(getActivity(), ZXingActivity.class);
-                ActivityOptionsCompatICS optionsCompatICS = ActivityOptionsCompatICS.makeCustomAnimation(getActivity(), R.anim.slide_right_in, R.anim.slide_left_out);
-                ActivityCompatICS.startActivity(getActivity(), intent, optionsCompatICS.toBundle());
+                Intent intent = new Intent(getActivity(), BehaviorActivity.class);
+                ActivityOptionsCompat optionsCompatICS = ActivityOptionsCompat.makeCustomAnimation(getActivity(), R.anim.slide_right_in, R.anim.slide_left_out);
+                ActivityCompat.startActivity(getActivity(), intent, optionsCompatICS.toBundle());
                 break;
         }
     }
