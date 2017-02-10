@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="@color/white"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="snap|scroll|exitUntilCollapsed">
 
             <ImageView
                 android:id="@+id/iv_cover"
